@@ -1,5 +1,8 @@
 # Model Testing
 
+- Input anonymized audio note
+- Output markdown report and PDF report 
+
 ## Running models
 - all code in generation.ipynb
 
