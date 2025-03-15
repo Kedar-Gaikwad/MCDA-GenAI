@@ -1,6 +1,6 @@
 # Model Testing
 
-- Input anonymized audio note
+- Input 5.wav.txt
 - Output markdown report and PDF report 
 
 ## Running models
