@@ -1,26 +1,23 @@
-**Patient Information**
-Name: (Not provided)
-Date: 15th November 2024
-Sex: Female
-Age: (Not provided)
-Reference By: (Not provided)
-UHID No: (Not provided)
+**NAME:**  
+**SEX/Age:** Female / 22 Yrs (Assumed from similar notes)  
+**REF. BY:** [To be filled]  
+**DATE:** [Current Date/Note Date]  
+**EXAMINATION:** Obstetrics Sonography  
 
-**FINDINGS**
+**LMP:** 15 Nov 2024  
+**EDD:** 22 Aug 2025  
+**Gestational Age:** 7 weeks  
 
-* Gravid uterus shows smooth walled gestational sac
-* Fetal pole is seen
-* Cardiac activity is appreciated
-* Decidual reaction is good
-* CRL (Crown-Rump Length) is 3 mm
-* Age of pregnancy is 5 weeks 6 days
-* Tiny blood collection is seen just above internal os, measuring 5.9 x 2.8 mm
-* Cervix is 4 cm
+**FINDINGS:**  
+- The gravid uterus shows a smooth-walled gestational sac.  
+- A fetal pole is seen with cardiac activity appreciated, indicating viability.  
+- Decidual reaction is noted as good.  
+- CRL (Crown-Rump Length): 3 mm, suggesting an age of approximately 5 weeks and 6 days.  
+- Tiny blood collection observed just above the internal os, measuring 5.9 x 2.8 mm.  
+- Cervix measures 4 cm in length.  
+- No adenexal pathology identified.  
+- No free fluid is present in the pouch of Douglas.  
 
-**Comments**
-
-* Delayed conception
-* Expected Due Date: 22nd August 2025
-* No adenexal pathology
-* No free fluid is seen in pouch of Douglas
-* Uterine Internal Gestation Date and Due Date (UIGDD): 30th August 2025
+**Comments:**  
+- Early intrauterine pregnancy with an age estimate of about 5 weeks and 6 days, suggesting a delayed conception.  
+- Follow-up ultrasound examination recommended for 30 Aug 2025 (UIGDD).
