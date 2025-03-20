@@ -1,0 +1,28 @@
+{
+    "patient_info": {
+        "NAME": "unknown",
+        "DATE": "unknown",
+        "SEX": "unknown",
+        "AGE": "unknown",
+        "UHID.NO": "unknown",
+        "REF. By": "unknown",
+        "EXAMINATION": "USG of Abdomen and Pelvis",
+        "OTHER": ""
+    },
+    "FINDINGS": [
+        "The liver appears enlarged with increased echogenicity.",
+        "No focal lesions are seen in the liver.",
+        "The portal vein is of normal caliber.",
+        "The gallbladder is distended with multiple small calculi, the largest measuring 6 mm.",
+        "No evidence of wall thickening or pericholecystic fluid around the gallbladder.",
+        "The common bile duct is normal in caliber.",
+        "Spleen is normal in size and echotexture. No focal or diffuse lesions are seen.",
+        "Pancreas appears normal in size and echotexture.",
+        "Kidneys are normal in size and echotexture.",
+        "No hydronephrosis or calculi are seen in the kidneys.",
+        "Urinary bladder is well distended with smooth walls.",
+        "No masses or stones are identified within the urinary bladder.",
+        "There is no free fluid observed in the abdomen."
+    ],
+    "Comments": []
+}

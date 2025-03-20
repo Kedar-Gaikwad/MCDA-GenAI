@@ -1,0 +1,28 @@
+{
+    "patient_info": {
+        "NAME": "unknown",
+        "DATE": "",
+        "SEX": "unknown",
+        "AGE": "unknown",
+        "UHID.NO": "unknown",
+        "REF. By": "unknown",
+        "EXAMINATION": "USG of Abdomen and Pelvis",
+        "OTHER": ""
+    },
+    "FINDINGS": [
+        "Single intrauterine gestational sac is seen.",
+        "Fetal pole with cardiac activity detected.",
+        "FHR measures 158 bpm.",
+        "Crown-rump length (CRL) measures 9 mm, corresponding to a gestational age of 6 weeks 3 days.",
+        "A small subchorionic hematoma is seen measuring 8 x 3 mm.",
+        "No membrane separation is seen.",
+        "Decidual reaction present.",
+        "Right ovary appears normal.",
+        "Left ovary shows a small simple cyst of 2.5 cm.",
+        "No adnexal pathology noted.",
+        "No free fluid is seen in the pouch of Douglas."
+    ],
+    "Comments": [
+        "Early intrauterine pregnancy of age-6 Wks 3 Days."
+    ]
+}

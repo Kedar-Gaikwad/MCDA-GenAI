@@ -1,0 +1,26 @@
+{
+    "patient_info": {
+        "NAME": "unknown",
+        "DATE": "15 NOV 2024",
+        "SEX": "FEMALE",
+        "AGE": "unknown",
+        "UHID.NO": "unknown",
+        "REF. By": "unknown",
+        "EXAMINATION": "Early Obstetrics Sonography",
+        "OTHER": "LMP 15th November 2024 EDD 22nd August 2025 D7 weeks"
+    },
+    "FINDINGS": [
+        "Gravid uterus shows smooth wall, gestational sac",
+        "Fetal pole is seen",
+        "Cardiac activity is appreciated",
+        "Decedial reaction good",
+        "CRL 3 mm",
+        "Tiny blood collection is seen just above internal loss measuring 5.9 x 2.8 mm",
+        "Cervix 4 cm",
+        "No adenexal pathology",
+        "No free fluid is seen in pouch of Douglas"
+    ],
+    "Comments": [
+        "Delayed conception, UIGDD 30 August 2025"
+    ]
+}
