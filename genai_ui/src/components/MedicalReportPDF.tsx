@@ -8,13 +8,17 @@ interface PatientInfo {
   DATE: string;
   'UHID.NO': string;
   'REF. By': string;
+  'REF.By': string;
+  EXAMINATION?: string;
   OTHER: Record<string, string>;
 }
 
 interface MedicalReportData {
   patient_info: PatientInfo;
   findings: string[];
+  FINDINGS?: string[];
   comments: string[];
+  Comments?: string[];
 }
 
 const styles = StyleSheet.create({
@@ -74,6 +78,13 @@ const styles = StyleSheet.create({
 });
 
 const MedicalReportPDF: React.FC<{ data: MedicalReportData }> = ({ data }) => {
+  // Normalize the data to handle case differences
+  const normalizedData = {
+    ...data,
+    findings: data.FINDINGS || data.findings || [],
+    comments: data.Comments || data.comments || []
+  };
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -86,8 +97,8 @@ const MedicalReportPDF: React.FC<{ data: MedicalReportData }> = ({ data }) => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Patient Information</Text>
           <View style={styles.infoGrid}>
-            {Object.entries(data.patient_info)
-              .filter(([key]) => key !== 'OTHER')
+            {Object.entries(normalizedData.patient_info)
+              .filter(([key]) => key !== 'OTHER' && key !== 'REF.By')
               .map(([key, value]) => (
                 <View key={key} style={styles.infoField}>
                   <Text style={styles.label}>{key}:</Text>
@@ -96,7 +107,7 @@ const MedicalReportPDF: React.FC<{ data: MedicalReportData }> = ({ data }) => {
               ))}
             
             {/* Custom fields from OTHER */}
-            {Object.entries(data.patient_info.OTHER).map(([key, value]) => (
+            {Object.entries(normalizedData.patient_info.OTHER).map(([key, value]) => (
               <View key={key} style={styles.customField}>
                 <Text style={styles.label}>{key}:</Text>
                 <Text style={styles.value}>{value}</Text>
@@ -108,7 +119,7 @@ const MedicalReportPDF: React.FC<{ data: MedicalReportData }> = ({ data }) => {
         {/* Findings Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Findings</Text>
-          {data.findings.map((finding, index) => (
+          {normalizedData.findings.map((finding, index) => (
             <Text key={index} style={styles.listItem}>
               • {finding}
             </Text>
@@ -118,7 +129,7 @@ const MedicalReportPDF: React.FC<{ data: MedicalReportData }> = ({ data }) => {
         {/* Comments Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Comments</Text>
-          {data.comments.map((comment, index) => (
+          {normalizedData.comments.map((comment, index) => (
             <Text key={index} style={styles.listItem}>
               • {comment}
             </Text>

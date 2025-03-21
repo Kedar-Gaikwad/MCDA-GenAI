@@ -10,13 +10,17 @@ interface PatientInfo {
   DATE: string;
   'UHID.NO': string;
   'REF. By': string;
+  'REF.By': string;
+  EXAMINATION?: string;
   OTHER: Record<string, string>;
 }
 
 interface MedicalReportData {
   patient_info: PatientInfo;
   findings: string[];
+  FINDINGS?: string[];
   comments: string[];
+  Comments?: string[];
 }
 
 interface MedicalReportProps {
@@ -32,6 +36,8 @@ const MedicalReport: React.FC<MedicalReportProps> = ({ initialData }) => {
       DATE: '',
       'UHID.NO': '',
       'REF. By': '',
+      'REF.By': '',
+      EXAMINATION: '',
       OTHER: {}
     },
     findings: [],
@@ -43,7 +49,15 @@ const MedicalReport: React.FC<MedicalReportProps> = ({ initialData }) => {
 
   useEffect(() => {
     if (initialData) {
-      setReportData(initialData);
+      const normalizedData: MedicalReportData = {
+        patient_info: {
+          ...initialData.patient_info,
+          'REF. By': initialData.patient_info['REF.By'] || initialData.patient_info['REF. By'] || '',
+        },
+        findings: initialData.FINDINGS || initialData.findings || [],
+        comments: initialData.Comments || initialData.comments || []
+      };
+      setReportData(normalizedData);
     }
   }, [initialData]);
 
