@@ -32,3 +32,11 @@
 - **qwen2.5:7b**: Good
 - **phi4:latest**: Good
 
+
+# Run back-end
+
+- pip install fastapi uvicorn python-multipart
+- uvicorn main:app --reload
+- curl -X POST "http://127.0.0.1:8000/process-file/" -F "file=@your_dir"
+
+
