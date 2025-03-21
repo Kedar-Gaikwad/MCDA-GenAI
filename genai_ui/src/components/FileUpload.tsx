@@ -68,11 +68,14 @@ const FileUpload: React.FC<FileUploadProps> = ({ onReportData }) => {
       formData.append('file', file);
 
       // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint
-      const response = await fetch('YOUR_API_ENDPOINT', {
+      const response = await fetch('http://127.0.0.1:8000/process-file/', {
         method: 'POST',
         body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
       });
-
+      print(response)
       if (response.ok) {
         // Mock response for testing
         if (!response.ok) {

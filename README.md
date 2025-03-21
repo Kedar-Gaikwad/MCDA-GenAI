@@ -26,7 +26,7 @@ pip3 install -r requirements.txt
 - check output at ./output_json/output.json
 
 ## Run back-end (only for UI link)
-- pip install fastapi uvicorn python-multipart
+- pip install fastapi uvicorn python-multipart fastapi-cors
 - uvicorn warp_api:app --reload
 - curl -X POST "http://127.0.0.1:8000/process-file/" -F "file=@anonymized/5.wav.txt"
 
