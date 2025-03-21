@@ -75,7 +75,6 @@ const FileUpload: React.FC<FileUploadProps> = ({ onReportData }) => {
           'Accept': 'application/json'
         }
       });
-      print(response)
       if (response.ok) {
         // Mock response for testing
         if (!response.ok) {

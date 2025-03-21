@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import './MedicalReport.css';
+import MedicalReportPDF from './MedicalReportPDF';
 
 interface PatientInfo {
   NAME: string;
@@ -117,13 +119,17 @@ const MedicalReport: React.FC<MedicalReportProps> = ({ initialData }) => {
     URL.revokeObjectURL(url);
   };
 
+  const exportToPDF = () => {
+    // This function is no longer needed as we're using PDFDownloadLink
+  };
+
   if (!initialData) {
     return null; // Don't render until we have initial data
   }
 
   return (
     <div className="medical-report">
-      <h2>Medical Report</h2>
+      <h2>Osciloist Medical Report</h2>
       
       <section className="patient-info">
         <h3>Patient Information</h3>
@@ -235,9 +241,13 @@ const MedicalReport: React.FC<MedicalReportProps> = ({ initialData }) => {
         </section>
       </div>
 
-      <button className="export-btn" onClick={exportToJSON}>
-        Export to PDF
-      </button>
+      <PDFDownloadLink
+        document={<MedicalReportPDF data={reportData} />}
+        fileName="medical_report.pdf"
+        className="export-btn"
+      >
+        {({ loading }) => (loading ? 'Generating PDF...' : 'Export to PDF')}
+      </PDFDownloadLink>
     </div>
   );
 };

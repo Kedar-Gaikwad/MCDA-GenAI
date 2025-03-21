@@ -18,6 +18,7 @@ def llm_process(text: str) -> dict:
     bert_model_name = "d4data/biomedical-ner-all"
     ollama_model = "phi4:latest"
     output_json = process_transcript(text, bert_model_name, ollama_model)
+    return output_json
     # test = {
     #       "patient_info": {
     #         'NAME': 'ANONIMIZED',
@@ -36,8 +37,7 @@ def llm_process(text: str) -> dict:
     #       ],
     #       "comments": ["Early intrauterine pregnancy estimated at about 5 weeks and 6 days. The presence of delayed conception is noted, with further examination planned for UIGDD on 30 August 2025"]
     #     }
-
-    return output_json
+    # return test
 
 @app.post("/process-file/")
 async def process_file(file: UploadFile = File(...)):
