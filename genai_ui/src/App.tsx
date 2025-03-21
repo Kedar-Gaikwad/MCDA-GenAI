@@ -28,11 +28,14 @@ function HomePage() {
   };
 
   return (
-    <>
+    <div className="home-page">
+      <div className="logo-container">
+        <img src="/LogoOSCILO.png" alt="Oscilo Logo" className="logo" />
+      </div>
       <h1>Osciloist</h1>
-      <h3>File upload</h3>
+      <h3>Transcript upload</h3>
       <FileUpload onReportData={handleReportData} />
-    </>
+    </div>
   );
 }
 
