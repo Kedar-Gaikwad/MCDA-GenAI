@@ -3,6 +3,7 @@ import re
 import json
 from ollama import chat
 from ollama import ChatResponse
+from transformers import AutoTokenizer, AutoModelForTokenClassification, pipeline
 
 # Check if GPU is available
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -35,8 +36,56 @@ anonymized audio note4:  Pelvic Ultrasound Examination Uterus is bulky, globular
 clinical note4: NAME SEX:  FEMALE DATE: 03 JAN 2024 REF. BY:  AGE: 22 YRS EXAMINATION: GRAV I DU TERU S UH ID NO: 80768/ OP D LMP- 15/11/2024 D- 7 W ks ED D- 22/08/2025 FINDINGS:  The gravid uterus shows smooth walled gestation al sac.  A foetal pole is seen.  Cardiac activity is appreciated.  Decidual reaction is good.  C RL- 3 mm D- 5 W ks 6 Days Tiny blood collection seen just above internal os, measuring 5.9 x 2.8 mm.  CER VIX- 4 cms No aden exal pathology seen.  No free fluid is seen in POD.  Comments:  Early intra uterine pregnancy of age- 5 W ks 6 Days Delayed conception. USG ED D- 30/08/2025 Tiny blood collection just above internal os.
 '''
 
+# Function to preprocess transcript text
+def preprocess_text(text, is_cased_model=False):
+    text = re.sub(r'\s+', ' ', text).strip()  # Normalize spaces
+    if not is_cased_model:
+        text = text.lower()  # Convert to lowercase only for uncased models
+    return text
 
-def generate_ollama_json(query, model_name):
+# Extract entities using MedBERT
+def extract_entities_with_bert(text, model_name):
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForTokenClassification.from_pretrained(model_name)
+    nlp = pipeline("ner", model=model, tokenizer=tokenizer, device=0 if torch.cuda.is_available() else -1)
+
+    # Preprocess the text based on whether the model is cased
+    is_cased = "cased" in model_name.lower()
+    text = preprocess_text(text, is_cased_model=is_cased)
+    
+    # Perform NER and print raw output for debugging
+    raw_entities = nlp(text)
+    # print(f"Raw NER output from {model_name}: {raw_entities}")
+    
+    # Post-process entities into a structured format
+    extracted_entities = []
+    current_entity = ""
+    current_label = ""
+    
+    for entity in raw_entities:
+        word = entity['word'].replace("##", "")  # Handle subword tokens
+        if entity['entity'].startswith('B-'):
+            if current_entity:
+                extracted_entities.append({"entity": current_entity, "label": current_label})
+            current_entity = word
+            current_label = entity['entity'][2:]  # Remove 'B-' prefix
+        elif entity['entity'].startswith('I-') and current_label == entity['entity'][2:]:
+            current_entity += " " + word
+        else:
+            if current_entity:
+                extracted_entities.append({"entity": current_entity, "label": current_label})
+            current_entity = ""
+            current_label = ""
+
+    if current_entity:
+        extracted_entities.append({"entity": current_entity, "label": current_label})
+
+    extracted_entities = [entitie for entitie in extracted_entities if len(entitie['entity']) > 2]
+
+    return extracted_entities
+
+# Generate report using LLM
+def generate_ollama_json(query, model_name, entities):
 
     prompt = context
     prompt += f"\n\nTesting anonymized audio note: {query}\n\n"
@@ -48,12 +97,14 @@ def generate_ollama_json(query, model_name):
     'UHID.NO':'',
     'REF.By': '',
     'EXAMINATION': '',
+    'OTHER': {}},
     "FINDINGS":[],
-    "Comments":[]
-    'OTHER': {}}
+    "Comments":[]}
     """
     prompt += "If a field of patient_info is unknown, please enter unknown\n"
     prompt += "FINDINGS and COMMENTS are lists containing multiple strings\n"
+    if entities is not None:
+        prompt += f"Extracted entities by BERT model for reference only: {entities}.\n\n"
     prompt += "Do not give me any output that does not conform to JSON format\n"
     response: ChatResponse = chat(model=model_name, messages=[
       {
@@ -63,3 +114,46 @@ def generate_ollama_json(query, model_name):
     ])
 
     return response.message.content
+
+
+# Main pipeline to process transcript, extract entities, and generate report
+def process_transcript(content, bert_model_name, ollama_model_name):
+    
+    # Step 1: Extract entities using BERT-based model
+    entities = extract_entities_with_bert(content, bert_model_name)
+    # print(f"Extracted entities using {bert_model_name}: {entities}")
+
+    # Step 2: Generate structured report using Ollama
+    output = generate_ollama_json(content, ollama_model_name, entities)
+    output_json = json.loads(output.replace("```", '')\
+                         .replace("json", '').replace("```", '').strip().replace("\n", ''))
+    return output_json
+    
+
+if __name__ == '__main__':
+    
+    # Medbert model -- ClinicalBERT-NER, Fine-tuned for clinical NER, 
+    bert_model_name = "d4data/biomedical-ner-all"
+
+    # Generation model
+    ollama_model = "phi4:latest"
+
+    # Read the transcript file
+    transcript_file = "./anonymized/5.wav.txt"  # Adjust path to your transcript file
+    with open(transcript_file, "r", encoding="utf-8") as file:
+        content = file.read()
+    print(f"Processing transcript: {content}")  # Debug: Show the input
+
+    # Run the pipeline
+    output_json = process_transcript(content, bert_model_name, ollama_model)
+
+    with open("./output_json/output.json", "w", encoding="utf-8") as json_file:
+        json.dump(output_json, json_file, ensure_ascii=False, indent=4)
+
+    print(f"Generated report in output_file")
+    
+
+
+
+
+

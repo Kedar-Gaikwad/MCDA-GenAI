@@ -1,0 +1,31 @@
+{
+    "patient_info": {
+        "NAME": "unknown",
+        "DATE": "15th November 2024 - 22nd August 2025",
+        "SEX": "Female",
+        "AGE": "unknown",
+        "UHID.NO": "unknown",
+        "REF.By": "unknown",
+        "EXAMINATION": "Early Obstetrics Sonography",
+        "OTHER": {}
+    },
+    "FINDINGS": [
+        "LMP: 15th November 2024",
+        "EDD: 22nd August 2025",
+        "Gestational Age: 7 weeks",
+        "Gravid Uterus shows smooth-walled gestation sac",
+        "Fetal pole is seen",
+        "Cardiac activity is appreciated",
+        "Decidual reaction is good",
+        "CRL: 3 mm",
+        "Gestational age: 5 weeks 6 days",
+        "Tiny blood collection seen just above internal os, measuring 5.9 x 2.8 mm",
+        "Cervix: 4 cm",
+        "No adnexal pathology",
+        "No free fluid is seen in pouch of Douglas"
+    ],
+    "Comments": [
+        "Delayed conception",
+        "UIGDD 30 August 2025"
+    ]
+}

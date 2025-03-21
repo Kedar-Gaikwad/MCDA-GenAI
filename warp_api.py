@@ -1,17 +1,16 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
-from report_generation import generate_ollama_json
+from report_generation_final import process_transcript
 import json
 
 app = FastAPI()
 
 def llm_process(text: str) -> dict:
 
-    model_name = 'phi4:latest'
-
-    output = generate_ollama_json(text, model_name)
-    output_json = json.loads(output.replace("```", '')\
-                            .replace("json", '').replace("```", '').strip().replace("\n", ''))
+    bert_model_name = "d4data/biomedical-ner-all"
+    ollama_model = "phi4:latest"
+    output_json = process_transcript(text, bert_model_name, ollama_model)
+    
     return output_json
 
 @app.post("/process-file/")
