@@ -46,11 +46,11 @@ def generate_ollama_json(query, model_name):
     'SEX':'',
     'AGE':'',
     'UHID.NO':'',
-    'REF. By': '',
+    'REF.By': '',
     'EXAMINATION': '',
-    'OTHER': ''},
     "FINDINGS":[],
-    "Comments": []}
+    "Comments":[]
+    'OTHER': {}}
     """
     prompt += "If a field of patient_info is unknown, please enter unknown\n"
     prompt += "FINDINGS and COMMENTS are lists containing multiple strings\n"
