@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import './FileUpload.css';
+import Spinner from './Spinner';
 
 interface MedicalReportData {
   patient_info: {
@@ -23,6 +24,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onReportData }) => {
   const [file, setFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [uploadStatus, setUploadStatus] = useState<string>('');
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -63,6 +65,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onReportData }) => {
       return;
     }
 
+    setIsProcessing(true);
     try {
       const formData = new FormData();
       formData.append('file', file);
@@ -71,19 +74,12 @@ const FileUpload: React.FC<FileUploadProps> = ({ onReportData }) => {
       const response = await fetch('http://127.0.0.1:8000/process-file/', {
         method: 'POST',
         body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
       });
+
       if (response.ok) {
-        // Mock response for testing
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        
         const data = await response.json();
         setUploadStatus('File uploaded successfully!');
-        onReportData(data); // Pass the data to the parent component
+        onReportData(data);
         setFile(null);
       } else {
         setUploadStatus('Error uploading file');
@@ -91,8 +87,14 @@ const FileUpload: React.FC<FileUploadProps> = ({ onReportData }) => {
     } catch (error) {
       setUploadStatus('Error uploading file');
       console.error('Upload error:', error);
+    } finally {
+      setIsProcessing(false);
     }
   };
+
+  if (isProcessing) {
+    return <Spinner />;
+  }
 
   return (
     <div className="file-upload-container">
